@@ -18,8 +18,6 @@ LOAD_PANEL_UI = 'load_panel_ui.ui'
 PDF = 'pdf'
 TXT = 'txt'
 
-SUCCESSFUL_INPUT_INFO_FORMAT = "color: green;font: 75 12pt 'Arial';"
-
 MISSING_INPUT_MESSAGE = 'ALL FIELDS SHOULD BE FILLED'
 
 SUCCESSFULL_LOGIN_MESSAGE = 'SUCCESSFULLY LOGGED IN'
@@ -48,6 +46,8 @@ SIGNUP_PANEL_HEIGHT = 840
  
 MAIN_WINDOW_HEIGHT = 780
 MAIN_WINDOW_WIDTH = 1120
+
+EMPTY_STRING = ''
 
 CATEGORIES_MAPPING = {0: 'business',
                       1:'entertainment',
@@ -181,7 +181,7 @@ class MainWindow(QMainWindow):
 
 
     def propose_content(self):
-        query = ''
+        query = EMPTY_STRING
         checked_boxes = self.checked_boxes()
         if len(checked_boxes) == 1:
             query = CATEGORIES_MAPPING[checked_boxes[0]]
@@ -195,8 +195,9 @@ class MainWindow(QMainWindow):
         return CATEGORIES_MAPPING[categories[0]] +" "+ CATEGORIES_MAPPING[categories[1]]
 
     def key_word_search(self, phrase):
-        self.ao.search_by_keyword(phrase)
-        self.set_articles_list()
+        if phrase != EMPTY_STRING:
+            self.ao.search_by_keyword(phrase)
+            self.set_articles_list()
 
 
     def setup_categories(self):
